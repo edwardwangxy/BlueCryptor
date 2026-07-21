@@ -169,7 +169,7 @@ public class StreamCryptor {
 	///
 	/// Maps CommonCryptoOptions onto a Swift struct.
 	///
-	public struct Options: OptionSet {
+	public struct Options: OptionSet, Sendable {
 		
 		public typealias RawValue = Int
 		public let rawValue: RawValue
@@ -190,18 +190,18 @@ public class StreamCryptor {
 		#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 		
 			/// Use padding. Needed unless the input is a integral number of blocks long.
-			public static var pkcs7Padding =  Options(rawValue:kCCOptionPKCS7Padding)
+			public static let pkcs7Padding = Options(rawValue:kCCOptionPKCS7Padding)
 		
 			/// Electronic Code Book Mode. Don't use this.
-			public static var ecbMode = Options(rawValue:kCCOptionECBMode)
+			public static let ecbMode = Options(rawValue:kCCOptionECBMode)
 		
 		#elseif os(Linux)
 		
 			/// Use padding. Needed unless the input is a integral number of blocks long.
-			public static var pkcs7Padding =  Options(rawValue:0x0001)
+			public static let pkcs7Padding = Options(rawValue:0x0001)
 		
 			/// Electronic Code Book Mode. Don't use this.
-			public static var ecbMode = Options(rawValue:0x0002)
+			public static let ecbMode = Options(rawValue:0x0002)
 		
 		#endif
 	}

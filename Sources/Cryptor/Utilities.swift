@@ -23,8 +23,7 @@ import Foundation
 //	  https://marcosantadev.com/test-swift-fatalerror/
 //
 func fatalError(_ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) -> Never {
-	
-	FatalErrorUtil.fatalErrorClosure(message(), file, line)
+	Swift.fatalError(message(), file: file, line: line)
 }
 
 // Convert an UnsafeMutablePointer<Int8>? to a String, providing a
@@ -40,23 +39,6 @@ func errToString(_ ptr: UnsafeMutablePointer<Int8>?) -> String {
     } else {
         return ""
     }
-}
-
-///
-/// Allows redirection of `fatalError` for Unit Testing or for
-/// library users that want to handle such errors in another way.
-///
-struct FatalErrorUtil {
-	
-	static var fatalErrorClosure: (String, StaticString, UInt) -> Never = defaultFatalErrorClosure
-	private static let defaultFatalErrorClosure = { Swift.fatalError($0, file: $1, line: $2) }
-	static func replaceFatalError(closure: @escaping (String, StaticString, UInt) -> Never) {
-		fatalErrorClosure = closure
-	}
-	static func restoreFatalError() {
-		fatalErrorClosure = defaultFatalErrorClosure
-	}
-	
 }
 
 ///

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name        = "BlueCryptor"
-s.version     = "1.0.33"
+s.version     = "3.0.0"
 s.summary     = "Swift cross-platform crypto library using CommonCrypto/libcrypto via Package Manager."
 s.homepage    = "https://github.com/Kitura/BlueCryptor"
 s.license     = { :type => "Apache License, Version 2.0" }
@@ -8,9 +8,9 @@ s.author     = "IBM & Kitura Project Authors"
 s.module_name  = 'Cryptor'
 
 s.requires_arc = true
-s.swift_version = '5.1'
+s.swift_version = '6.0'
 s.osx.deployment_target = "10.11"
-s.ios.deployment_target = "10.0"
+s.ios.deployment_target = "13.0"
 s.tvos.deployment_target = "10.0"
 s.watchos.deployment_target = "2.0"
 s.source   = { :git => "https://github.com/edwardwangxy/BlueCryptor.git", :tag => s.version }
