@@ -31,7 +31,11 @@ public class HMAC: Updatable {
     ///
     /// Enumerates available algorithms.
     ///
-    public enum Algorithm: Sendable {
+    public enum Algorithm {
+		
+        /// Message Digest 5
+        case md5
+		
         /// Secure Hash Algorithm 1
         case sha1
 		
@@ -49,12 +53,28 @@ public class HMAC: Updatable {
         
 		#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 		
+			static let fromNative: [CCHmacAlgorithm: Algorithm] = [
+                CCHmacAlgorithm(kCCHmacAlgSHA1): .sha1,
+                CCHmacAlgorithm(kCCHmacAlgSHA1): .md5,
+                CCHmacAlgorithm(kCCHmacAlgSHA256): .sha256,
+                CCHmacAlgorithm(kCCHmacAlgSHA384): .sha384,
+                CCHmacAlgorithm(kCCHmacAlgSHA512): .sha512,
+                CCHmacAlgorithm(kCCHmacAlgSHA224): .sha224
+            ]
+
+			static func fromNativeValue(nativeAlg: CCHmacAlgorithm) -> Algorithm? {
+			
+				return fromNative[nativeAlg]
+			}
+		
 			func nativeValue() -> CCHmacAlgorithm {
 			
 				switch self {
 				
 				case .sha1:
 					return CCHmacAlgorithm(kCCHmacAlgSHA1)
+				case .md5:
+					return CCHmacAlgorithm(kCCHmacAlgMD5)
 				case .sha224:
 					return CCHmacAlgorithm(kCCHmacAlgSHA224)
 				case .sha256:
@@ -74,6 +94,8 @@ public class HMAC: Updatable {
 	
 				case .sha1:
 					return .init(EVP_sha1())
+				case .md5:
+					return .init(EVP_md5())
 				case .sha224:
 					return .init(EVP_sha224())
 				case .sha256:
@@ -98,6 +120,8 @@ public class HMAC: Updatable {
 					
 				case .sha1:
 					return Int(CC_SHA1_DIGEST_LENGTH)
+				case .md5:
+					return Int(CC_MD5_DIGEST_LENGTH)
 				case .sha224:
 					return Int(CC_SHA224_DIGEST_LENGTH)
 				case .sha256:
@@ -114,6 +138,8 @@ public class HMAC: Updatable {
 					
 				case .sha1:
 					return Int(SHA_DIGEST_LENGTH)
+				case .md5:
+					return Int(MD5_DIGEST_LENGTH)
 				case .sha224:
 					return Int(SHA224_DIGEST_LENGTH)
 				case .sha256:
@@ -306,3 +332,4 @@ public class HMAC: Updatable {
         return hmac
     }
 }
+
