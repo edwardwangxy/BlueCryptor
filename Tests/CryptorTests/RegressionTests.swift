@@ -2,7 +2,6 @@ import Foundation
 import XCTest
 @testable import Cryptor
 
-@MainActor
 final class CryptorRegressionTests: XCTestCase {
     func testKnownDigestVectorsIncludingEmptyInput() {
         XCTAssertEqual("".sha256, "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")

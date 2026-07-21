@@ -27,7 +27,6 @@ import Foundation
 
 import Dispatch
 
-@MainActor
 final class CryptorTests: XCTestCase {
 	
 	#if os(Linux)
